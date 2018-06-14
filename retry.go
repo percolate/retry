@@ -34,7 +34,7 @@ type Re struct {
 
 // Func is a function type that takes no arguments and returns an error. This is meant
 // to wrap the functionality that should be retried.
-type Func func() merry.Error
+type Func func() error
 
 // Try executes the provided function using the Re fields
 func (r Re) Try(f Func) merry.Error {
@@ -53,7 +53,7 @@ func (r Re) Try(f Func) merry.Error {
 
 		i++
 		if i == r.Max {
-			return err.Prependf("retry: max retries reached (%v):", r.Max)
+			return merry.Prependf(err, "retry: max retries reached (%v):", r.Max)
 		}
 
 		if delay > 0 {
