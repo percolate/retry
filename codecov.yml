@@ -1,0 +1,20 @@
+# https://docs.codecov.io/docs/codecov-yaml
+# Will need to add an ops request to generate a token for your package.
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        target: auto
+
+    patch:
+      default:
+        target: 80
+
+    changes: false
+
+comment: false
