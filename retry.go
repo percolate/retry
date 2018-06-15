@@ -46,7 +46,7 @@ func (r Re) Try(f Func) merry.Error {
 			break
 		}
 
-		err2 := r.checkErrors(err)
+		err2 := r.checkErrors(merry.Wrap(err))
 		if err2 != nil {
 			return err2.Prepend("retry: unexpected error:")
 		}

@@ -14,7 +14,7 @@ var (
 )
 
 func TestTryNoError(t *testing.T) {
-	err := Re{}.Try(func() merry.Error {
+	err := Re{}.Try(func() error {
 		return nil
 	})
 
@@ -22,7 +22,7 @@ func TestTryNoError(t *testing.T) {
 }
 
 func TestTryUnexpectedError(t *testing.T) {
-	err := Re{Max: 2, RetryableErrors: []merry.Error{dummyError}}.Try(func() merry.Error {
+	err := Re{Max: 2, RetryableErrors: []merry.Error{dummyError}}.Try(func() error {
 		return merry.New("unexpected error")
 	})
 
@@ -30,7 +30,7 @@ func TestTryUnexpectedError(t *testing.T) {
 }
 
 func TestTryExpectedError(t *testing.T) {
-	err := Re{Max: 2, RetryableErrors: []merry.Error{dummyError}}.Try(func() merry.Error {
+	err := Re{Max: 2, RetryableErrors: []merry.Error{dummyError}}.Try(func() error {
 		return dummyError.Here()
 	})
 
@@ -40,7 +40,7 @@ func TestTryExpectedError(t *testing.T) {
 func TestTryCalled5Times(t *testing.T) {
 	i := uint(0)
 	max := uint(5)
-	err := Re{Max: max}.Try(func() merry.Error {
+	err := Re{Max: max}.Try(func() error {
 		i++
 		return merry.New("unexpected error")
 	})
@@ -54,7 +54,7 @@ func TestTryDelay(t *testing.T) {
 	delay := time.Duration(100 * time.Millisecond)
 
 	var called, calledPrevious time.Time
-	err := Re{Delay: delay}.Try(func() merry.Error {
+	err := Re{Delay: delay}.Try(func() error {
 		switch i {
 		case 1:
 			called = time.Now()
@@ -76,7 +76,7 @@ func TestTryBackoff(t *testing.T) {
 	backoff := float64(1.2)
 
 	var called, calledPrevious time.Time
-	err := Re{Delay: delay, Backoff: backoff}.Try(func() merry.Error {
+	err := Re{Delay: delay, Backoff: backoff}.Try(func() error {
 		switch i {
 		case 2:
 			called = time.Now()
@@ -99,7 +99,7 @@ func TestTryMaxDelay(t *testing.T) {
 	backoff := float64(5)
 
 	var called, calledPrevious time.Time
-	err := Re{Delay: delay, Backoff: backoff, MaxDelay: maxDelay}.Try(func() merry.Error {
+	err := Re{Delay: delay, Backoff: backoff, MaxDelay: maxDelay}.Try(func() error {
 		switch i {
 		case 2:
 			called = time.Now()
