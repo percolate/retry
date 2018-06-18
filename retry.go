@@ -6,6 +6,7 @@ import (
 	"github.com/ansel1/merry"
 )
 
+// Re configures the settings to be used for retries
 type Re struct {
 	// Max specifies the maximum number of attempts. By default, there is no
 	// maximum (inifinite retries).
