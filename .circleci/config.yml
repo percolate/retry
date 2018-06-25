@@ -30,7 +30,7 @@ jobs:
             mdl $(find . -path ./vendor -prune -o -type f -name '*.md' -print)
   release:
     docker:
-      - image: prclt/cci-release:1.0.2
+      - image: 667005031541.dkr.ecr.us-west-1.amazonaws.com/circleci/cci-release:1.0.3
     steps:
       - checkout
       - deploy:
