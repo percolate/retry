@@ -49,6 +49,18 @@ func TestTryCalled5Times(t *testing.T) {
 	assert.Equal(t, max, i)
 }
 
+func TestTryCalled1TimesWhenMaxIs0(t *testing.T) {
+	i := 0
+	max := uint(0)
+	err := Re{Max: max}.Try(func() error {
+		i++
+		return merry.New("unexpected error")
+	})
+
+	assert.Error(t, err)
+	assert.Equal(t, 1, i)
+}
+
 func TestTryDelay(t *testing.T) {
 	i := 0
 	delay := time.Duration(100 * time.Millisecond)

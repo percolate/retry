@@ -53,7 +53,7 @@ func (r Re) Try(f Func) merry.Error {
 		}
 
 		i++
-		if i == r.Max {
+		if i >= r.Max {
 			return merry.Prependf(err, "retry: max retries reached (%v):", r.Max)
 		}
 
