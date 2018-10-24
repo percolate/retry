@@ -23,9 +23,9 @@ fmt:
 	go fmt ./...
 
 vet:
-	go vet ./...
+	go vet -mod=vendor ./...
 
 test: $(COVERAGE_DIR)
-	go test -v -coverprofile=$(TOP_DIR)/$(COVERAGE_DIR)/coverage.out -covermode=atomic github.com/percolate/retry
+	go test -mod=vendor -v -coverprofile=$(TOP_DIR)/$(COVERAGE_DIR)/coverage.out -covermode=atomic github.com/percolate/retry
 
 .PHONY: clean vet fmt test
